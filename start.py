@@ -1,1 +1,2 @@
-print('torch')
+a="pasha_devman"
+print(a)
