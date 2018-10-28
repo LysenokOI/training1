@@ -1,4 +1,5 @@
 import chardet
+import re
 
 def define_file_encoding(filepath):
     with open(filepath, 'rb') as raw_content:
@@ -9,8 +10,10 @@ def load_raw_content(filepath, encoding):
         return raw_content.read()
 
 
-define_file_encoding('Ferris.txt')
-load_raw_content('Ferris.txt', 'encoding')
-
-for line in raw_content:
-    print(line)
+print('Input file name:')
+text_file = input() + '.txt'
+encod_file = define_file_encoding(text_file)
+read_text = load_raw_content(text_file, encod_file)
+reg_ex = re.compile("[\w']+")
+list_text = reg_ex.findall(read_text)
+print(list_text)
