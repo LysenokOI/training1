@@ -1,2 +1,2 @@
-a="pasha_devman"
+a = "pasha_devman"
 print(a)
