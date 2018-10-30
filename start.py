@@ -1,5 +1,6 @@
 import chardet
 import re
+import operator
 
 def define_file_encoding(filepath):
     with open(filepath, 'rb') as raw_content:
@@ -13,10 +14,18 @@ def word_catalg(lst):
     catalg = {}
     for itm in lst:
         if itm not in catalg:
-            catalg = dict(itm=1)  # create couple with value 1. Я знаю, что здесь itm неправильно
+            catalg[itm] = 1  # create couple with value 1. Я знаю, что здесь itm неправильно
         else:
-            catalg[itm] = +1  # и здесь
-        return(catalg)
+            catalg[itm] += 1  # и здесь
+    return(catalg)
+
+
+def output_max(max_frq_word, word_frq_cat):
+    for value in max_frq_word:
+        if len(max_frq_word) > 1:
+            print(value, word_frq_cat[value])
+        else:
+            print(value, word_frq_cat[value])
 
 
 print('Input file name:')
@@ -26,5 +35,6 @@ read_text = load_raw_content(text_file, encod_file)
 reg_ex = re.compile("[\w']+")
 list_text = reg_ex.findall(read_text)
 # print(list_text)  удалить позже
-word_freq = word_catalg(list_text)  # function for creating couples
-print(word_freq)
+word_freq_catalog = word_catalg(list_text)  # function for creating couples
+max_freq_word = [key for key, val in word_freq_catalog.items() if val == max(word_freq_catalog.values())] # key
+output_max(max_freq_word, word_freq_catalog)
