@@ -16,7 +16,12 @@ def word_catalg(lst):
             catalg[itm] = 1
         else:
             catalg[itm] += 1
-    return(catalg)
+    return catalg
+
+def getwordlist(raw_text):  # get list of separate words
+    return_only_words = re.compile("[\w']+")
+    only_words_list = return_only_words.findall(raw_text)
+    return only_words_list
 
 
 def output_max(max_frq_word, word_frq_cat):
@@ -27,13 +32,16 @@ def output_max(max_frq_word, word_frq_cat):
             print('Most common word:', value, ', Found in the text ', word_frq_cat[value], ' times')
 
 
+def get_most_common_words(word_with_times_catalog):
+    most_common_words = [key for key, val in word_with_times_catalog.items() if val == max(word_with_times_catalog.values())] # key
+    return most_common_words
+
 print('Input file name:')
 text_file = input() + '.txt'
 encod_file = define_file_encoding(text_file)
-read_text = load_raw_content(text_file, encod_file)
-reg_ex = re.compile("[\w']+")
-list_text = reg_ex.findall(read_text)
-# print(list_text)  если хочется посмотреть на список
-word_freq_catalog = word_catalg(list_text)  # function for creating couples
-max_freq_word = [key for key, val in word_freq_catalog.items() if val == max(word_freq_catalog.values())] # key
-output_max(max_freq_word, word_freq_catalog)
+rawtext = load_raw_content(text_file, encod_file)
+listed_text = getwordlist(rawtext)
+# print(listed_text)  если хочется посмотреть на список
+words_and_times_catalog = word_catalg(listed_text)  # function for creating couples
+most_common_word = get_most_common_words(words_and_times_catalog)
+output_max(most_common_word, words_and_times_catalog)
